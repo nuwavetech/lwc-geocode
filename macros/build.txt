@@ -1,0 +1,26 @@
+?tacl macro
+
+==   Copyright (c) 2016 NuWave Technologies, Inc. All rights reserved.
+
+#frame
+
+#push compiler
+#push host_arch
+
+== Determine the host architecture. First character of TOSVERSION
+== maps to OS version, which determines architecture. Q=G(TNS/R),
+== R=H, T=J (TNS/E)
+#set host_arch [ #tosversion ]
+#set host_arch [ #charget host_arch 1 for 1 ]
+[ #if host_arch '=' "Q" |then|
+    #set compiler nmc
+  |else|
+    #set compiler ccomp
+]
+
+[compiler] / in geocodec, out geocodel / geocodex ; &
+  extensions, runnable, saveabend, symbols, inspect, &
+  SSV0 "[#defaults/current/]", SSV1 "$system.system"
+
+
+#unframe  

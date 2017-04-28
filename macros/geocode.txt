@@ -1,0 +1,7 @@
+?tacl macro
+#frame
+
+param GEOCODE-PATHMON $LWGEO
+run GEOCODEX
+
+#unframe

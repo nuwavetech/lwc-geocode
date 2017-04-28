@@ -1,0 +1,10 @@
+
+[log]
+file=zzlog
+level=info   # log at info level.
+format=text
+ 
+# Configure diagnostic logging.
+[diag-log]
+enabled=1
+httpStatusFilter=400:599

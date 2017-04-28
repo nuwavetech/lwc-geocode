@@ -1,0 +1,18 @@
+?tacl macro
+#frame
+
+#set #inlineprefix +
+
+ddl2 / inline /
+
++ ?nosave
++ ?dict
+
++ ?c geocodeh !
++ ?source ddlsrc
+
++ ?nosave
+
+#inlineeof 
+
+#unframe
