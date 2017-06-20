@@ -4,9 +4,9 @@ This is the Geocode sample application for LightWave Client. It demonstrates cal
 
 ### Prerequisites
 
-• NonStop C Compiler
-• LightWave Client (http://download.nuwavetech.com)
-• Google API Key (https://console.developers.google.com/apis)
+* NonStop C Compiler
+* LightWave Client (http://download.nuwavetech.com)
+* Google API Key (https://console.developers.google.com/apis)
 
 You can create a Google API Key for free. It must be enabled for the Google Maps Geocoding API.
 
