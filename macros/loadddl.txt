@@ -1,18 +1,21 @@
 ?tacl macro
 #frame
 
+== Creates the DDL dictionary and C / COBOL header files.
+
 #set #inlineprefix +
 
 ddl2 / inline /
-
+    
++ ?dict 
 + ?nosave
 + ?dict
 
-+ ?c geocodeh !
-+ ?source ddlsrc
++ ?c geoh !
++ ?source geoddl( LIGHTWAVE-DEF, API-DEF )
 
 + ?nosave
 
-#inlineeof 
+#inlineeof
 
-#unframe
+#unframe    
