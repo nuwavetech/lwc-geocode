@@ -11,26 +11,24 @@
 #include <string.h>
 #include <strings.h>
 #pragma list
-  
-#include "geo.h"
 
-#define min(x, y) (x < y ? x : y)
+#include "geo.h"
 
 static const char* pathmon_name;
 static const char* server_class;
 
 static void doGeocodeRequest(const char* address);
 static const char* getEnvValue(const char* name, int required);
-static void printLocation(geocode_def* geocode);
+static void displayLocation(geocode_def* geocode);
 static char* formatNumeric(long long value, short scale);
-static void printReplyError(lightwave_error_rp_def* error);
-static void printSendError(void);
+static void displayReplyError(lightwave_error_rp_def* error);
+static void displaySendError(void);
 
 int main(int argc, char** argv, char** env) {
   char address[256];
 
   printf("\nLightWave Client(tm) - Google Geocoding API "
-         "- Test Driver - 19AUG2019\n");
+         "- C Test Driver - 22AUG2019\n\n");
 
   /* Get variables from the environment. These are set by the SETENV macro. */
   if ((pathmon_name = getEnvValue("PATHMON-NAME", 1)) == NULL) {
@@ -43,25 +41,26 @@ int main(int argc, char** argv, char** env) {
 
   /* Get lookup address. */
   while (1) {
+    int count;
 
     /* Get lookup address. */
-    printf("\nAddress? ");
-    if (scanf("%239[^\n]", address) <= 0) {
-      break;
-    }
-  
-    if (strcasecmp(address, "exit") == 0 || strcasecmp(address, "quit") == 0) {
+    printf("Address? ");
+    count = scanf("%239[^\n]", address);
+
+    if (count < 0) {
       break;
     }
 
-    /* Flush leftover input. */ 
+    /* Flush leftover input. */
     while (getchar() != '\n')
       ;
 
-    doGeocodeRequest(address);
+    if (count > 0) {
+      doGeocodeRequest(address);
+    }
   }
 
-  printf("\n");
+  printf("\n");  
   return 0;
 }
 
@@ -88,84 +87,118 @@ static void doGeocodeRequest(const char* address) {
                          (char*)server_class, (short)strlen(server_class),
                          (char*)&message_buffer, sizeof(get_geocode_rq_def),
                          sizeof(message_buffer));
-
+  
   if (rc != 0) {
-    printSendError();
+    displaySendError();
     return;
   }
 
-  if (message_buffer.rp_header.rp_code == lw_rp_error) {
-    printReplyError(&message_buffer.rp_error);
-  } else {
-    switch (message_buffer.rp_header.http_status) {
-    case 200:
-      printLocation(&message_buffer.get_geocode_rp_200.geocode);
-      break;
-    default:
-      break;
-    }
+  if (message_buffer.rp_error.lightwave_rp_header.rp_code != 0) {
+    displayReplyError(&message_buffer.rp_error);
+    return;
   }
+
+  if (message_buffer.rp_header.http_status != 200) {
+    printf("Error: unexpected HTTP Status %d received.\n",
+           message_buffer.rp_header.http_status);
+    return;
+  }
+
+  if (strcmp(message_buffer.get_geocode_rp_200.geocode.status_rw, "OK") != 0) {
+    printf("GEOCODE API error:\n");
+    printf("    status:   %s\n", message_buffer.get_geocode_rp_200.geocode.status_rw);
+    printf("    message:  %s\n", message_buffer.get_geocode_rp_200.geocode.error_message); 
+    return;
+  }
+
+  displayLocation(&message_buffer.get_geocode_rp_200.geocode);
 
   return;
 }
 
-static void printLocation(geocode_def* geocode) {
+static void displayLocation(geocode_def* geocode) {
 
-  int x, y, z;
+  int i, j, k;
 
-  if (strcmp(geocode->status_rw, "OK")) {
+  for (i = 0; i < geocode->results_count; i++) {
 
-    printf("status=%s\n", geocode->status_rw);
-    printf("message=%s\n", geocode->error_message);
+    printf(
+        "\n================================================================================\n");
+    printf(" %s", geocode->results[i].formatted_address);
+    printf(
+        "\n================================================================================\n");
+    printf("\nlatitude: %s",
+           formatNumeric(geocode->results[i].geometry.location.lat, 13));
+    printf("  longitude: %s",
+           formatNumeric(geocode->results[i].geometry.location.lng, 13));
+    printf("  resolution: %s\n", geocode->results[i].geometry.location_type);
 
-  } else {
+    printf(
+        "\nShort Name -------------  Long Name ---------------------- Type(s) -------------\n");
 
-    int maxsize = sizeof(geocode->results) / sizeof(geocode->results[0]);
-    if (geocode->results_count > maxsize) {
-      printf("%d results available, %d returned\n", geocode->results_count,
-             maxsize);
-    }
+    for (j = 0; j < geocode->results[i].address_components_count; j++) {
 
-    for (x = 0; x < min(geocode->results_count, maxsize); x++) {
+      address_components_type_def* address =
+          &geocode->results[i].address_components[j];
 
-      int maxsize;
+      printf("%-24.24s  %-32.32s", address->short_name, address->long_name);
 
-      printf("\n==============================================================="
-             "=================\n");
-      printf(" %s", geocode->results[x].formatted_address);
-      printf("\n==============================================================="
-             "=================\n");
-      printf("\nlatitude: %s",
-             formatNumeric(geocode->results[x].geometry.location.lat, 13));
-      printf("  longitude: %s",
-             formatNumeric(geocode->results[x].geometry.location.lng, 13));
-      printf("  resolution: %s\n", geocode->results[x].geometry.location_type);
-
-      maxsize = sizeof(geocode->results[x].address_components) /
-                sizeof(geocode->results[x].address_components[0]);
-
-      printf("\nShort Name -------------  "
-             "Long Name ---------------------- "
-             "Type(s) -------------\n");
-
-      for (y = 0;
-           y < min(geocode->results[x].address_components_count, maxsize);
-           y++) {
-
-        address_components_type_def* address =
-            &geocode->results[x].address_components[y];
-        int maxsize;
-
-        printf("%-24.24s  %-32.32s", address->short_name, address->long_name);
-
-        maxsize = sizeof(address->types) / sizeof(address->types[0]);
-        for (z = 0; z < min(address->types_count, maxsize); z++) {
-          printf(" %s", address->types[z]);
-        }
-
-        printf("\n");
+      for (k = 0; k < address->types_count; k++) {
+        printf(" %s", address->types[k]);
       }
+
+      printf("\n");
     }
+  }
+
+  printf("\n");
+
+  return;
+}
+
+static void displayReplyError(lightwave_error_rp_def* error) {
+
+  switch (error->lightwave_rp_header.rp_code) {
+  case lw_rp_info:
+    switch (error->lightwave_rp_header.info_code) {
+    case lw_info_field_truncated:
+      printf("Warning: a field was truncated at offset: %d\n",
+             error->lightwave_rp_header.info_detail);
+      break;
+    case lw_info_array_truncated:
+      printf("Warning: an array was truncated at offset: %d\n",
+             error->lightwave_rp_header.info_detail);
+      break;
+    default:
+      printf("Warning: unknown info code %d\n",
+             error->lightwave_rp_header.info_code);
+      break;
+    }
+    break;
+  case lw_rp_error:
+    printf("Error:\n");
+    printf("    source:   %d\n", error->error_source);
+    printf("    code:     %d\n", error->error_code);
+    printf("    subcode:  %d\n", error->error_code);
+    printf("    message:  %-256.256s\n", error->error_message);
+    break;
+  default:
+    printf("Error: unknown error code %s\n",
+           error->lightwave_rp_header.rp_code);
+    break;
+  }
+}
+
+static void displaySendError(void) {
+  short prc;
+  short frc;
+
+  SERVERCLASS_SEND_INFO_(&prc, &frc);
+
+  printf("\n\nSERVERCLASS_SEND_ error %hd:%hd occurred.\n\n", prc, frc);
+
+  if (frc == 14) {
+    printf("Did you start the pathway by running STARTPW?\n\n");
   }
 
   return;
@@ -221,63 +254,6 @@ static const char* getEnvValue(const char* name, int required) {
     printf("PARAM \"%s\" not set. Did you run SETENV?\n", name);
   }
   return v;
-}
-
-static void printReplyError(lightwave_error_rp_def* error) {
-
-  static char errortext[lightwave_error_rp_def_Size];
-  const char* message = (const char*)&errortext;
-  lightwave_rp_header_def* header = &error->lightwave_rp_header;
-
-  switch (header->rp_code) {
-  case lw_rp_success:
-    message = "Successful completion";
-    break;
-
-  case lw_rp_info:
-    switch (header->info_code) {
-    case lw_info_field_truncated:
-      message = "warning: field was truncated";
-      break;
-    case lw_info_array_truncated:
-      message = "warning: array was truncated";
-      break;
-    default:
-      sprintf(errortext, "warning: unknown info code %d", header->info_code);
-      break;
-    }
-    break;
-
-  case lw_rp_error:
-    sprintf(errortext, "error: source=%d code=%d subcode=%d\n%s",
-            (int)error->error_source, (int)error->error_code,
-            (int)error->error_subcode, error->error_message);
-    break;
-
-  default:
-    sprintf(errortext, "error: unknown reply code %d", header->rp_code);
-    break;
-  }
-
-  printf("%s\n", message);
-}
-
-static void printSendError(void) {
-  short prc;
-  short frc;
-
-  SERVERCLASS_SEND_INFO_(&prc, &frc);
-
-  printf("\n\nSERVERCLASS_SEND_ error %hd:%hd occurred.\n\n", prc, frc);
-  switch (frc) {
-  case 14:
-    printf("Did you start the pathway by running STARTPW?\n\n");
-    break;
-  default:
-    break;
-  }
-
-  return;
 }
 
 /* End of file. */

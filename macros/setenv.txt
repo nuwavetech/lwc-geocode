@@ -5,5 +5,5 @@
 #set #param pathmon-name        $NWGEO
 #set #param server-class        GEOCODING-API
 #set #param lwc-isv             [#defaults/current/]
-#set #param base-url            https://maps.googleapis.com
-#set #param api-key             <your-google-api-key>
+#set #param base-url            https://maps.googleapis.com/
+#set #param api-key             <your-google-api-key>   

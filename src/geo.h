@@ -1,6 +1,6 @@
-/* SCHEMA PRODUCED DATE - TIME : 8/19/2019 - 08:33:49 */
+/* SCHEMA PRODUCED DATE - TIME : 8/22/2019 - 05:49:59 */
 #pragma section lightwave_rp_code_enum
-/* Definition LIGHTWAVE-RP-CODE-ENUM created on 08/19/2019 at 08:33 */
+/* Definition LIGHTWAVE-RP-CODE-ENUM created on 08/22/2019 at 05:49 */
 enum
 {
    lw_rp_success = 0,
@@ -9,7 +9,7 @@ enum
 };
 typedef short                           lightwave_rp_code_enum_def;
 #pragma section lightwave_info_code_enum
-/* Definition LIGHTWAVE-INFO-CODE-ENUM created on 08/19/2019 at 08:33 */
+/* Definition LIGHTWAVE-INFO-CODE-ENUM created on 08/22/2019 at 05:49 */
 enum
 {
    lw_info_field_truncated = 100,
@@ -17,7 +17,7 @@ enum
 };
 typedef short                           lightwave_info_code_enum_def;
 #pragma section lightwave_error_src_enum
-/* Definition LIGHTWAVE-ERROR-SRC-ENUM created on 08/19/2019 at 08:33 */
+/* Definition LIGHTWAVE-ERROR-SRC-ENUM created on 08/22/2019 at 05:49 */
 enum
 {
    lw_error_src_lightwave = 1,
@@ -27,7 +27,7 @@ enum
 };
 typedef short                           lightwave_error_src_enum_def;
 #pragma section lightwave_error_enum
-/* Definition LIGHTWAVE-ERROR-ENUM created on 08/19/2019 at 08:33 */
+/* Definition LIGHTWAVE-ERROR-ENUM created on 08/22/2019 at 05:49 */
 enum
 {
    lw_error_invalid_license = 1,
@@ -42,7 +42,7 @@ enum
 };
 typedef short                           lightwave_error_enum_def;
 #pragma section lightwave_rq_header
-/* Definition LIGHTWAVE-RQ-HEADER created on 08/19/2019 at 08:33 */
+/* Definition LIGHTWAVE-RQ-HEADER created on 08/22/2019 at 05:50 */
 #include <tnsint.h>
 #pragma fieldalign shared2 __lightwave_rq_header
 typedef struct __lightwave_rq_header
@@ -54,7 +54,7 @@ typedef struct __lightwave_rq_header
 } lightwave_rq_header_def;
 #define lightwave_rq_header_def_Size 32
 #pragma section lightwave_rp_header
-/* Definition LIGHTWAVE-RP-HEADER created on 08/19/2019 at 08:33 */
+/* Definition LIGHTWAVE-RP-HEADER created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __lightwave_rp_header
 typedef struct __lightwave_rp_header
 {
@@ -66,7 +66,7 @@ typedef struct __lightwave_rp_header
 } lightwave_rp_header_def;
 #define lightwave_rp_header_def_Size 32
 #pragma section lightwave_error_rp
-/* Definition LIGHTWAVE-ERROR-RP created on 08/19/2019 at 08:33 */
+/* Definition LIGHTWAVE-ERROR-RP created on 08/22/2019 at 05:50 */
 #include <tnsint.h>
 #pragma fieldalign shared2 __lightwave_error_rp
 typedef struct __lightwave_error_rp
@@ -79,7 +79,7 @@ typedef struct __lightwave_error_rp
 } lightwave_error_rp_def;
 #define lightwave_error_rp_def_Size 4140
 #pragma section google_geocode_val
-/* Definition GOOGLE-GEOCODE-VAL created on 08/19/2019 at 08:33 */
+/* Definition GOOGLE-GEOCODE-VAL created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __google_geocode_val
 typedef struct __google_geocode_val
 {
@@ -90,7 +90,7 @@ typedef struct __google_geocode_val
 } google_geocode_val_def;
 #define google_geocode_val_def_Size 4
 #pragma section google_geocode_enm
-/* Definition GOOGLE-GEOCODE-ENM created on 08/19/2019 at 08:33 */
+/* Definition GOOGLE-GEOCODE-ENM created on 08/22/2019 at 05:50 */
 enum
 {
    rq_get_geocode = 1,
@@ -98,7 +98,7 @@ enum
 };
 typedef short                           google_geocode_enm_def;
 #pragma section address_components_type
-/* Definition ADDRESS-COMPONENTS-TYPE created on 08/19/2019 at 08:33 */
+/* Definition ADDRESS-COMPONENTS-TYPE created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __address_components_type
 typedef struct __address_components_type
 {
@@ -109,7 +109,7 @@ typedef struct __address_components_type
 } address_components_type_def;
 #define address_components_type_def_Size 218
 #pragma section location
-/* Definition LOCATION created on 08/19/2019 at 08:33 */
+/* Definition LOCATION created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __location
 typedef struct __location
 {
@@ -118,7 +118,7 @@ typedef struct __location
 } location_def;
 #define location_def_Size 16
 #pragma section viewport_type
-/* Definition VIEWPORT-TYPE created on 08/19/2019 at 08:33 */
+/* Definition VIEWPORT-TYPE created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __viewport_type
 typedef struct __viewport_type
 {
@@ -127,7 +127,7 @@ typedef struct __viewport_type
 } viewport_type_def;
 #define viewport_type_def_Size 32
 #pragma section geometry_type
-/* Definition GEOMETRY-TYPE created on 08/19/2019 at 08:33 */
+/* Definition GEOMETRY-TYPE created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __geometry_type
 typedef struct __geometry_type
 {
@@ -137,32 +137,32 @@ typedef struct __geometry_type
 } geometry_type_def;
 #define geometry_type_def_Size 72
 #pragma section results_type
-/* Definition RESULTS-TYPE created on 08/19/2019 at 08:33 */
+/* Definition RESULTS-TYPE created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __results_type
 typedef struct __results_type
 {
    short                           address_components_count;
-   address_components_type_def     address_components[8];
+   address_components_type_def     address_components[10];
    char                            formatted_address[128];
    geometry_type_def               geometry;
-   char                            place_id[36];
+   char                            place_id[128];
    short                           types_count;
    char                            types[4][32];
 } results_type_def;
-#define results_type_def_Size 2112
+#define results_type_def_Size 2640
 #pragma section geocode
-/* Definition GEOCODE created on 08/19/2019 at 08:33 */
+/* Definition GEOCODE created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __geocode
 typedef struct __geocode
 {
    char                            status_rw[24];
    char                            error_message[128];
    short                           results_count;
-   results_type_def                results[4];
+   results_type_def                results[8];
 } geocode_def;
-#define geocode_def_Size 8602
+#define geocode_def_Size 21274
 #pragma section get_geocode_rq
-/* Definition GET-GEOCODE-RQ created on 08/19/2019 at 08:33 */
+/* Definition GET-GEOCODE-RQ created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __get_geocode_rq
 typedef struct __get_geocode_rq
 {
@@ -175,16 +175,16 @@ typedef struct __get_geocode_rq
 } get_geocode_rq_def;
 #define get_geocode_rq_def_Size 388
 #pragma section get_geocode_200_rp
-/* Definition GET-GEOCODE-200-RP created on 08/19/2019 at 08:33 */
+/* Definition GET-GEOCODE-200-RP created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __get_geocode_200_rp
 typedef struct __get_geocode_200_rp
 {
    lightwave_rp_header_def         lightwave_rp_header;
    geocode_def                     geocode;
 } get_geocode_200_rp_def;
-#define get_geocode_200_rp_def_Size 8634
+#define get_geocode_200_rp_def_Size 21306
 #pragma section reverse_geocode_rq
-/* Definition REVERSE-GEOCODE-RQ created on 08/19/2019 at 08:33 */
+/* Definition REVERSE-GEOCODE-RQ created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __reverse_geocode_rq
 typedef struct __reverse_geocode_rq
 {
@@ -195,11 +195,11 @@ typedef struct __reverse_geocode_rq
 } reverse_geocode_rq_def;
 #define reverse_geocode_rq_def_Size 107
 #pragma section reverse_geocode_200_rp
-/* Definition REVERSE-GEOCODE-200-RP created on 08/19/2019 at 08:33 */
+/* Definition REVERSE-GEOCODE-200-RP created on 08/22/2019 at 05:50 */
 #pragma fieldalign shared2 __reverse_geocode_200_rp
 typedef struct __reverse_geocode_200_rp
 {
    lightwave_rp_header_def         lightwave_rp_header;
    geocode_def                     geocode;
 } reverse_geocode_200_rp_def;
-#define reverse_geocode_200_rp_def_Size 8634
+#define reverse_geocode_200_rp_def_Size 21306

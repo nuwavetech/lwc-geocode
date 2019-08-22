@@ -1,18 +1,49 @@
-?tacl macro
+?tacl routine
 
 == Builds the GeoCode program files
  
 #frame
 
-[#push  
-basename
+[#push     
+cobolcomp
+series
+rvu
 ] 
- 
-#set basename geo
 
-ccomp / in [basename]c, out [basename]l / [basename] ; &
+#output  
+#output Compiling C test driver ...
+
+ccomp / in geoc, out geol / geo ; &
   extensions, runnable, saveabend, symbols, inspect, &
   allow_cplusplus_comments, &
   SSV0 "[#defaults/current/]", SSV1 "$system.system"
 
+[#if [ :_completion:completioncode ] <> 0 |then|
+  #output C compile completed with warnings or errors.
+  #return
+]
+
+#output Compiling COBOL test driver ...
+
+#set rvu [#tosversion]
+#set series [#charget rvu 1 for 1]
+[#case [series]
+  | R T |
+    == H,J series
+    #set cobolcomp ecobol
+  | V |
+    == L series
+    #set cobolcomp xcobol
+]
+
+[cobolcomp] / in geocbl, out geocbll / geocob ; &
+  runnable, saveabend, symbols, inspect
+
+[#if [ :_completion:completioncode ] <> 0 |then|
+  #output COBOL compile completed with warnings or errors.
+  #return
+]
+
+#output Compile completed with no warnings or errors.
+#output
 #unframe  

@@ -7,8 +7,8 @@ file=zzlog
 level=info   # log at info level.
 format=text
 
-# Diagnostic log configuration.
+# Diagnostic log configuration. Create a log when an error occurs.
 [diag-log]
 enabled=1
-#replyCodeFilter=1,2
-#httpStatusFilter=400:599    
+replyCodeFilter=1,2
+httpStatusFilter=400:599      

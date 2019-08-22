@@ -16,7 +16,7 @@ The following values must be configured in the SETUP TACL macro after installati
 
 The application must be built from source. The source files are present in the repository for convenient viewing. 
 In addition, a PAK archive containing all of the source files is available for transfer to your NonStop system.
-
+ 
 | Repository File | NonStop File | 
 | -- | -- |
 | macros/build.txt | build |
@@ -29,6 +29,7 @@ In addition, a PAK archive containing all of the source files is available for t
 | resources/geoapi.json | geoapi |  
 | resources/geoddl.txt | geoddl |
 | src/geo.c | geoc |
+| src/geocbl.cbl | geocbl |
 | geopak.bin | geopak |
   
 #### Transfer the PAK archive to your NonStop System
@@ -61,9 +62,11 @@ TACL > RUN STARTPW
 ```
 Run the application
 ```
-TACL > RUN GEO
+TACL > RUN GEO (C version)
+or 
+TACL > RUN GEOCOB (COBOL version)
 
-LightWave Client(tm) - Google Geocoding API - Test Driver - 19AUG2019
+LightWave Client(tm) - Google Geocoding API - C Test Driver - 22AUG2019
 
 Address? 301 edgewater place, suite 100, wakefield, ma
 

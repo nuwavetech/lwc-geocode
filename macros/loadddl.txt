@@ -12,10 +12,11 @@ ddl2 / inline /
 + ?dict
 
 + ?c geoh !
++ ?cobol geocopy !
 + ?source geoddl( LIGHTWAVE-DEF, API-DEF )
 
-+ ?nosave
++ ?nosave 
 
 #inlineeof
 
-#unframe    
+#unframe     

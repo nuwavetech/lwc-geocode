@@ -2,7 +2,7 @@
   "name": "google-geocode",
   "description": "Google Geocode API",
   "id": "038c208e3c3d1f1d788001010000012ef1",
-  "modificationTime": 1565890618,
+  "modificationTime": 1566474500,
   "isBrief": false,
   "operations": [
     {
@@ -263,7 +263,7 @@
           {
             "name": "address_components",
             "minOccurs": 1,
-            "maxOccurs": 8,
+            "maxOccurs": 10,
             "dependsOn": "address_components-count",
             "type": "Address_componentsType"
           },
@@ -279,7 +279,7 @@
           {
             "name": "place_id",
             "type": "string",
-            "size": 36
+            "size": 128
           },
           {
             "name": "types-count",
@@ -317,7 +317,7 @@
           {
             "name": "results",
             "minOccurs": 1,
-            "maxOccurs": 4,
+            "maxOccurs": 8,
             "dependsOn": "results-count",
             "type": "ResultsType"
           }
@@ -486,7 +486,7 @@
             "type": "string",
             "size": 25
           },
-          {  
+          {
             "name": "location_type",
             "type": "string",
             "size": 25
