@@ -3,7 +3,8 @@ This LightWave Client sample application illustrates how to use the Google Geoco
  
 ## Prerequisites
 
-+ NonStop C Compiler.
++ NonStop C Compiler, if building the C sample.
++ NonStop COBOL Compiler, if building the COBOL sample.
 + An installed instance of [LightWave Client](https://docs.nuwavetech.com/display/LWCLIENT) version 1.0.4 or greater.
 + A Google API Key enabled for the Geocoding API. See [Get an API Key](https://developers.google.com/maps/documentation/geocoding/get-api-key).
 

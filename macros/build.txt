@@ -10,20 +10,27 @@ series
 rvu
 ] 
 
-#output  
-#output Compiling C test driver ...
+#output
 
-ccomp / in geoc, out geol / geo ; &
-  extensions, runnable, saveabend, symbols, inspect, &
-  allow_cplusplus_comments, &
-  SSV0 "[#defaults/current/]", SSV1 "$system.system"
+== Compile the C sample if there's a C compiler.
 
-[#if [ :_completion:completioncode ] <> 0 |then|
-  #output C compile completed with warnings or errors.
-  #return
-]
+[#if [#fileinfo /existence/ $system.system.ccomp] = -1 |then|  
+  #output Compiling C test driver ...
 
-#output Compiling COBOL test driver ...
+  ccomp / in geoc, out geol / geo ; &
+    extensions, runnable, saveabend, symbols, inspect, &
+    allow_cplusplus_comments, &
+    SSV0 "[#defaults/current/]", SSV1 "$system.system"
+
+  [#if [ :_completion:completioncode ] <> 0 |then|
+    #output C compile completed with warnings or errors.
+    #return
+  ]
+|else|
+  #output C compiler not found, the C sample will not be built.
+]  
+
+== Compile the COBOL sample if there's a COBOL compiler.
 
 #set rvu [#tosversion]
 #set series [#charget rvu 1 for 1]
@@ -36,13 +43,19 @@ ccomp / in geoc, out geol / geo ; &
     #set cobolcomp xcobol
 ]
 
-[cobolcomp] / in geocbl, out geocbll / geocob ; &
-  runnable, saveabend, symbols, inspect
+[#if [#fileinfo /existence/ $system.system.[cobolcomp]] = -1 |then|  
+  #output Compiling COBOL test driver ...
 
-[#if [ :_completion:completioncode ] <> 0 |then|
-  #output COBOL compile completed with warnings or errors.
-  #return
-]
+  [cobolcomp] / in geocbl, out geocbll / geocob ; &
+    runnable, saveabend, symbols, inspect
+  
+  [#if [ :_completion:completioncode ] <> 0 |then|
+    #output COBOL compile completed with warnings or errors.
+    #return
+  ]
+|else|
+  #output COBOL compiler not found, the COBOL sample will not be built.
+]  
 
 #output Compile completed with no warnings or errors.
 #output
