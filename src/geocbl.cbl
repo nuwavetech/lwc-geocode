@@ -75,7 +75,7 @@
    DISPLAY "LightWave Client(tm) - Google Geocoding API ",
                " - COBOL Test Driver - 22AUG2019".
    DISPLAY " ".
-  
+    
 *  Get variables from the environment. These are set by the SETENV macro.
    ENTER "SMU_Param_GetText_" USING WS-ENV-PATHMON-NAME, WS-PATHMON-NAME
        GIVING WS-PATHMON-NAME-LEN.  
@@ -97,7 +97,7 @@
    ENTER "FNAMECOLLAPSE" USING WS-STRING, WS-MY-TERM-FILE-NAME.
    ENTER "COBOL_ASSIGN_" USING MY-TERM
        WS-MY-TERM-FILE-NAME GIVING WS-RC.
-   OPEN I-O MY-TERM EXCLUSIVE.
+   OPEN I-O MY-TERM.
 
    PERFORM UNTIL WS-MY-TERM-EOF  
        READ MY-TERM WITH PROMPT WS-PROMPT
