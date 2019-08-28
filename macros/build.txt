@@ -1,26 +1,62 @@
-?tacl macro
+?tacl routine
 
-==   Copyright (c) 2016 NuWave Technologies, Inc. All rights reserved.
-
+== Builds the GeoCode program files
+ 
 #frame
 
-#push compiler
-#push host_arch
+[#push     
+cobolcomp
+series
+rvu
+] 
 
-== Determine the host architecture. First character of TOSVERSION
-== maps to OS version, which determines architecture. Q=G(TNS/R),
-== R=H, T=J (TNS/E)
-#set host_arch [ #tosversion ]
-#set host_arch [ #charget host_arch 1 for 1 ]
-[ #if host_arch '=' "Q" |then|
-    #set compiler nmc
-  |else|
-    #set compiler ccomp
+#output
+
+== Compile the C sample if there's a C compiler.
+
+[#if [#fileinfo /existence/ $system.system.ccomp] = -1 |then|  
+  #output Compiling C test driver ...
+
+  ccomp / in geoc, out geol / geo ; &
+    extensions, runnable, saveabend, symbols, inspect, &
+    allow_cplusplus_comments, &
+    SSV0 "[#defaults/current/]", SSV1 "$system.system"
+
+  [#if [ :_completion:completioncode ] <> 0 |then|
+    #output C compile completed with warnings or errors.
+    #return
+  ]
+|else|
+  #output C compiler not found, the C sample will not be built.
+]  
+
+== Compile the COBOL sample if there's a COBOL compiler.
+
+#set rvu [#tosversion]
+#set series [#charget rvu 1 for 1]
+[#case [series]
+  | R T |
+    == H,J series
+    #set cobolcomp ecobol
+  | V |
+    == L series
+    #set cobolcomp xcobol
 ]
 
-[compiler] / in geocodec, out geocodel / geocodex ; &
-  extensions, runnable, saveabend, symbols, inspect, &
-  SSV0 "[#defaults/current/]", SSV1 "$system.system"
+[#if [#fileinfo /existence/ $system.system.[cobolcomp]] = -1 |then|  
+  #output Compiling COBOL test driver ...
 
+  [cobolcomp] / in geocbl, out geocbll / geocob ; &
+    runnable, saveabend, symbols, inspect
+  
+  [#if [ :_completion:completioncode ] <> 0 |then|
+    #output COBOL compile completed with warnings or errors.
+    #return
+  ]
+|else|
+  #output COBOL compiler not found, the COBOL sample will not be built.
+]  
 
+#output Compile completed with no warnings or errors.
+#output
 #unframe  

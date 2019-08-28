@@ -1,0 +1,265 @@
+* SCHEMA PRODUCED DATE - TIME : 8/22/2019 - 05:49:59
+?SECTION LIGHTWAVE-RP-CODE-ENUM,TANDEM
+* Definition LIGHTWAVE-RP-CODE-ENUM created on 08/22/2019 at 05:49
+  01 LIGHTWAVE-RP-CODE-ENUM          NATIVE-2.
+    88 LW-RP-SUCCESS                 VALUE IS 0.
+    88 LW-RP-INFO                    VALUE IS 1.
+    88 LW-RP-ERROR                   VALUE IS 2.
+?SECTION LIGHTWAVE-INFO-CODE-ENUM,TANDEM
+* Definition LIGHTWAVE-INFO-CODE-ENUM created on 08/22/2019 at 05:49
+  01 LIGHTWAVE-INFO-CODE-ENUM        NATIVE-2.
+    88 LW-INFO-FIELD-TRUNCATED       VALUE IS 100.
+    88 LW-INFO-ARRAY-TRUNCATED       VALUE IS 101.
+?SECTION LIGHTWAVE-ERROR-SRC-ENUM,TANDEM
+* Definition LIGHTWAVE-ERROR-SRC-ENUM created on 08/22/2019 at 05:49
+  01 LIGHTWAVE-ERROR-SRC-ENUM        NATIVE-2.
+    88 LW-ERROR-SRC-LIGHTWAVE        VALUE IS 1.
+    88 LW-ERROR-SRC-HTTP             VALUE IS 2.
+    88 LW-ERROR-SRC-TCPIP            VALUE IS 3.
+    88 LW-ERROR-SRC-SSL              VALUE IS 4.
+?SECTION LIGHTWAVE-ERROR-ENUM,TANDEM
+* Definition LIGHTWAVE-ERROR-ENUM created on 08/22/2019 at 05:49
+  01 LIGHTWAVE-ERROR-ENUM            NATIVE-2.
+    88 LW-ERROR-INVALID-LICENSE      VALUE IS 1.
+    88 LW-ERROR-INVALID-HEADER       VALUE IS 2.
+    88 LW-ERROR-INVALID-RQ-CODE      VALUE IS 3.
+    88 LW-ERROR-INVALID-TYPE         VALUE IS 4.
+    88 LW-ERROR-SERIALIZATION-ERROR  VALUE IS 5.
+    88 LW-ERROR-DESERIALIZATION-ERROR VALUE IS 6.
+    88 LW-ERROR-REQUEST-TIMEOUT      VALUE IS 7.
+    88 LW-ERROR-RESPONSE-NOT-DEFINED VALUE IS 12.
+    88 LW-ERROR-INTERNAL-ERROR       VALUE IS 500.
+?SECTION LIGHTWAVE-RQ-HEADER,TANDEM
+* Definition LIGHTWAVE-RQ-HEADER created on 08/22/2019 at 05:50
+  01 LIGHTWAVE-RQ-HEADER.
+    02 RQ-CODE                       NATIVE-2.
+    02 RQ-VERSION                    NATIVE-2.
+    02 RQ-TIMEOUT                    NATIVE-4.
+    02 RESERVED                      PIC X(24).
+?SECTION LIGHTWAVE-RP-HEADER,TANDEM
+* Definition LIGHTWAVE-RP-HEADER created on 08/22/2019 at 05:50
+  01 LIGHTWAVE-RP-HEADER.
+    02 RP-CODE                       NATIVE-2.
+    02 HTTP-STATUS                   NATIVE-2.
+    02 INFO-CODE                     NATIVE-2.
+    02 INFO-DETAIL                   NATIVE-2.
+    02 RESERVED                      PIC X(24).
+?SECTION LIGHTWAVE-ERROR-RP,TANDEM
+* Definition LIGHTWAVE-ERROR-RP created on 08/22/2019 at 05:50
+  01 LIGHTWAVE-ERROR-RP.
+    02 LIGHTWAVE-RP-HEADER.
+      03 RP-CODE                     NATIVE-2.
+      03 HTTP-STATUS                 NATIVE-2.
+      03 INFO-CODE                   NATIVE-2.
+      03 INFO-DETAIL                 NATIVE-2.
+      03 RESERVED                    PIC X(24).
+    02 ERROR-SOURCE                  NATIVE-4.
+    02 ERROR-CODE                    NATIVE-4.
+    02 ERROR-SUBCODE                 NATIVE-4.
+    02 ERROR-MESSAGE                 PIC X(4096).
+?SECTION GOOGLE-GEOCODE-VAL,TANDEM
+* Definition GOOGLE-GEOCODE-VAL created on 08/22/2019 at 05:50
+  01 GOOGLE-GEOCODE-VAL.
+    02 RQ-GET-GEOCODE                PIC S9(4)      COMP
+                                     VALUE 1.
+    02 RQ-REVERSE-GEOCODE            PIC S9(4)      COMP
+                                     VALUE 2.
+?SECTION GOOGLE-GEOCODE-ENM,TANDEM
+* Definition GOOGLE-GEOCODE-ENM created on 08/22/2019 at 05:50
+  01 GOOGLE-GEOCODE-ENM              NATIVE-2.
+    88 RQ-GET-GEOCODE                VALUE IS 1.
+    88 RQ-REVERSE-GEOCODE            VALUE IS 2.
+?SECTION ADDRESS-COMPONENTS-TYPE,TANDEM
+* Definition ADDRESS-COMPONENTS-TYPE created on 08/22/2019 at 05:50
+  01 ADDRESS-COMPONENTS-TYPE.
+    02 LONG-NAME                     PIC X(64).
+    02 SHORT-NAME                    PIC X(24).
+    02 TYPES-COUNT                   NATIVE-2.
+    02 TYPES                         PIC X(32)
+                                     OCCURS 4 TIMES.
+?SECTION LOCATION,TANDEM
+* Definition LOCATION created on 08/22/2019 at 05:50
+  01 LOCATION.
+    02 LAT                           PIC S9(5)V9(13) COMP.
+    02 LNG                           PIC S9(5)V9(13) COMP.
+?SECTION VIEWPORT-TYPE,TANDEM
+* Definition VIEWPORT-TYPE created on 08/22/2019 at 05:50
+  01 VIEWPORT-TYPE.
+    02 NORTHEAST.
+      03 LAT                         PIC S9(5)V9(13) COMP.
+      03 LNG                         PIC S9(5)V9(13) COMP.
+    02 SOUTHWEST.
+      03 LAT                         PIC S9(5)V9(13) COMP.
+      03 LNG                         PIC S9(5)V9(13) COMP.
+?SECTION GEOMETRY-TYPE,TANDEM
+* Definition GEOMETRY-TYPE created on 08/22/2019 at 05:50
+  01 GEOMETRY-TYPE.
+    02 LOCATION.
+      03 LAT                         PIC S9(5)V9(13) COMP.
+      03 LNG                         PIC S9(5)V9(13) COMP.
+    02 LOCATION-TYPE                 PIC X(24).
+    02 VIEWPORT.
+      03 NORTHEAST.
+        04 LAT                       PIC S9(5)V9(13) COMP.
+        04 LNG                       PIC S9(5)V9(13) COMP.
+      03 SOUTHWEST.
+        04 LAT                       PIC S9(5)V9(13) COMP.
+        04 LNG                       PIC S9(5)V9(13) COMP.
+?SECTION RESULTS-TYPE,TANDEM
+* Definition RESULTS-TYPE created on 08/22/2019 at 05:50
+  01 RESULTS-TYPE.
+    02 ADDRESS-COMPONENTS-COUNT      NATIVE-2.
+    02 ADDRESS-COMPONENTS            OCCURS 10 TIMES.
+      03 LONG-NAME                   PIC X(64).
+      03 SHORT-NAME                  PIC X(24).
+      03 TYPES-COUNT                 NATIVE-2.
+      03 TYPES                       PIC X(32)
+                                     OCCURS 4 TIMES.
+    02 FORMATTED-ADDRESS             PIC X(128).
+    02 GEOMETRY.
+      03 LOCATION.
+        04 LAT                       PIC S9(5)V9(13) COMP.
+        04 LNG                       PIC S9(5)V9(13) COMP.
+      03 LOCATION-TYPE               PIC X(24).
+      03 VIEWPORT.
+        04 NORTHEAST.
+          05 LAT                     PIC S9(5)V9(13) COMP.
+          05 LNG                     PIC S9(5)V9(13) COMP.
+        04 SOUTHWEST.
+          05 LAT                     PIC S9(5)V9(13) COMP.
+          05 LNG                     PIC S9(5)V9(13) COMP.
+    02 PLACE-ID                      PIC X(128).
+    02 TYPES-COUNT                   NATIVE-2.
+    02 TYPES                         PIC X(32)
+                                     OCCURS 4 TIMES.
+?SECTION GEOCODE,TANDEM
+* Definition GEOCODE created on 08/22/2019 at 05:50
+  01 GEOCODE.
+    02 STATUS-RW                     PIC X(24).
+    02 ERROR-MESSAGE                 PIC X(128).
+    02 RESULTS-COUNT                 NATIVE-2.
+    02 RESULTS                       OCCURS 8 TIMES.
+      03 ADDRESS-COMPONENTS-COUNT    NATIVE-2.
+      03 ADDRESS-COMPONENTS          OCCURS 10 TIMES.
+        04 LONG-NAME                 PIC X(64).
+        04 SHORT-NAME                PIC X(24).
+        04 TYPES-COUNT               NATIVE-2.
+        04 TYPES                     PIC X(32)
+                                     OCCURS 4 TIMES.
+      03 FORMATTED-ADDRESS           PIC X(128).
+      03 GEOMETRY.
+        04 LOCATION.
+          05 LAT                     PIC S9(5)V9(13) COMP.
+          05 LNG                     PIC S9(5)V9(13) COMP.
+        04 LOCATION-TYPE             PIC X(24).
+        04 VIEWPORT.
+          05 NORTHEAST.
+            06 LAT                   PIC S9(5)V9(13) COMP.
+            06 LNG                   PIC S9(5)V9(13) COMP.
+          05 SOUTHWEST.
+            06 LAT                   PIC S9(5)V9(13) COMP.
+            06 LNG                   PIC S9(5)V9(13) COMP.
+      03 PLACE-ID                    PIC X(128).
+      03 TYPES-COUNT                 NATIVE-2.
+      03 TYPES                       PIC X(32)
+                                     OCCURS 4 TIMES.
+?SECTION GET-GEOCODE-RQ,TANDEM
+* Definition GET-GEOCODE-RQ created on 08/22/2019 at 05:50
+  01 GET-GEOCODE-RQ.
+    02 LIGHTWAVE-RQ-HEADER.
+      03 RQ-CODE                     NATIVE-2.
+      03 RQ-VERSION                  NATIVE-2.
+      03 RQ-TIMEOUT                  NATIVE-4.
+      03 RESERVED                    PIC X(24).
+    02 ADDRESS-RW                    PIC X(256).
+    02 BOUNDS                        PIC X(25).
+    02 LANGUAGE                      PIC X(25).
+    02 REGION                        PIC X(25).
+    02 COMPONENTS                    PIC X(25).
+?SECTION GET-GEOCODE-200-RP,TANDEM
+* Definition GET-GEOCODE-200-RP created on 08/22/2019 at 05:50
+  01 GET-GEOCODE-200-RP.
+    02 LIGHTWAVE-RP-HEADER.
+      03 RP-CODE                     NATIVE-2.
+      03 HTTP-STATUS                 NATIVE-2.
+      03 INFO-CODE                   NATIVE-2.
+      03 INFO-DETAIL                 NATIVE-2.
+      03 RESERVED                    PIC X(24).
+    02 GEOCODE.
+      03 STATUS-RW                   PIC X(24).
+      03 ERROR-MESSAGE               PIC X(128).
+      03 RESULTS-COUNT               NATIVE-2.
+      03 RESULTS                     OCCURS 8 TIMES.
+        04 ADDRESS-COMPONENTS-COUNT  NATIVE-2.
+        04 ADDRESS-COMPONENTS        OCCURS 10 TIMES.
+          05 LONG-NAME               PIC X(64).
+          05 SHORT-NAME              PIC X(24).
+          05 TYPES-COUNT             NATIVE-2.
+          05 TYPES                   PIC X(32)
+                                     OCCURS 4 TIMES.
+        04 FORMATTED-ADDRESS         PIC X(128).
+        04 GEOMETRY.
+          05 LOCATION.
+            06 LAT                   PIC S9(5)V9(13) COMP.
+            06 LNG                   PIC S9(5)V9(13) COMP.
+          05 LOCATION-TYPE           PIC X(24).
+          05 VIEWPORT.
+            06 NORTHEAST.
+              07 LAT                 PIC S9(5)V9(13) COMP.
+              07 LNG                 PIC S9(5)V9(13) COMP.
+            06 SOUTHWEST.
+              07 LAT                 PIC S9(5)V9(13) COMP.
+              07 LNG                 PIC S9(5)V9(13) COMP.
+        04 PLACE-ID                  PIC X(128).
+        04 TYPES-COUNT               NATIVE-2.
+        04 TYPES                     PIC X(32)
+                                     OCCURS 4 TIMES.
+?SECTION REVERSE-GEOCODE-RQ,TANDEM
+* Definition REVERSE-GEOCODE-RQ created on 08/22/2019 at 05:50
+  01 REVERSE-GEOCODE-RQ.
+    02 LIGHTWAVE-RQ-HEADER.
+      03 RQ-CODE                     NATIVE-2.
+      03 RQ-VERSION                  NATIVE-2.
+      03 RQ-TIMEOUT                  NATIVE-4.
+      03 RESERVED                    PIC X(24).
+    02 LATLNG                        PIC X(25).
+    02 LOCATION-TYPE                 PIC X(25).
+    02 RESULT-TYPE                   PIC X(25).
+?SECTION REVERSE-GEOCODE-200-RP,TANDEM
+* Definition REVERSE-GEOCODE-200-RP created on 08/22/2019 at 05:50
+  01 REVERSE-GEOCODE-200-RP.
+    02 LIGHTWAVE-RP-HEADER.
+      03 RP-CODE                     NATIVE-2.
+      03 HTTP-STATUS                 NATIVE-2.
+      03 INFO-CODE                   NATIVE-2.
+      03 INFO-DETAIL                 NATIVE-2.
+      03 RESERVED                    PIC X(24).
+    02 GEOCODE.
+      03 STATUS-RW                   PIC X(24).
+      03 ERROR-MESSAGE               PIC X(128).
+      03 RESULTS-COUNT               NATIVE-2.
+      03 RESULTS                     OCCURS 8 TIMES.
+        04 ADDRESS-COMPONENTS-COUNT  NATIVE-2.
+        04 ADDRESS-COMPONENTS        OCCURS 10 TIMES.
+          05 LONG-NAME               PIC X(64).
+          05 SHORT-NAME              PIC X(24).
+          05 TYPES-COUNT             NATIVE-2.
+          05 TYPES                   PIC X(32)
+                                     OCCURS 4 TIMES.
+        04 FORMATTED-ADDRESS         PIC X(128).
+        04 GEOMETRY.
+          05 LOCATION.
+            06 LAT                   PIC S9(5)V9(13) COMP.
+            06 LNG                   PIC S9(5)V9(13) COMP.
+          05 LOCATION-TYPE           PIC X(24).
+          05 VIEWPORT.
+            06 NORTHEAST.
+              07 LAT                 PIC S9(5)V9(13) COMP.
+              07 LNG                 PIC S9(5)V9(13) COMP.
+            06 SOUTHWEST.
+              07 LAT                 PIC S9(5)V9(13) COMP.
+              07 LNG                 PIC S9(5)V9(13) COMP.
+        04 PLACE-ID                  PIC X(128).
+        04 TYPES-COUNT               NATIVE-2.
+        04 TYPES                     PIC X(32)
+                                     OCCURS 4 TIMES.
