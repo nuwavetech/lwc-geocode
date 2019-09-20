@@ -43,7 +43,7 @@ Logon to TACL on your NonStop system to peform the installation and build steps.
 
 #### Unpak the PAK archive
 ```
-TACL > UNPAK GEOPAK ($*.*.*), VOL $your-volume.your-subvolume.*, LISTALL, MYID
+TACL > UNPAK GEOPAK ($*.*.*), VOL $vol.subvol, LISTALL, MYID
 ```
 
 #### Build the application 
